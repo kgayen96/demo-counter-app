@@ -4,8 +4,28 @@ node{
           git branch: 'main', url: 'https://github.com/kgayen96/demo-counter-app.git'
     }
         stage('Maven Build'){
-            def mavenHome = tool name: "Apache Maven 3.8.6", type: "maven"
-            def mavenCMD = "${mavenHome}/opt/mvn"
-            sh "${mavenCMD} clean package"
+            maven 'Maven 3.3.9'
+        jdk 'jdk8'
+    }
+    stages {
+        stage ('Initialize') {
+            steps {
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                '''
+            }
+        }
+
+        stage ('Build') {
+            steps {
+                sh 'mvn -Dmaven.test.failure.ignore=true install' 
+            }
+            post {
+                success {
+                    junit 'target/surefire-reports/**/*.xml' 
+                }
+            }
+        }
     }
 }
