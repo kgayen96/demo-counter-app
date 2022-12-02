@@ -16,5 +16,10 @@ pipeline{
                 sh 'mvn test'
             }
         }
-    }
+        stage('Interation testing'){
+            steps{
+                sh 'mvn verify -DskipUnitTests'
+            }
+        }    
+    }        
 }
