@@ -1,11 +1,20 @@
-node{
-      
-    stage('Git Checkout'){
-          git branch: 'main', url: 'https://github.com/kgayen96/demo-counter-app.git'
-    }
+pipeline{
     
-      stage('Maven Build'){
-             
-            sh 'mvn test'
-      }      
+    agent any 
+    
+    stages {
+        
+        stage('Git Checkout'){
+            
+            steps{
+                git branch: 'main', url: 'https://github.com/kgayen96/demo-counter-app.git'
+            }
+        }
+        stage('UNIT testing'){
+            
+            steps{
+                sh 'mvn test'
+            }
+        }
+    }
 }
