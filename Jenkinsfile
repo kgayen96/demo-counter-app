@@ -27,19 +27,14 @@ pipeline{
             }
         }
         stage('Static code analysis'){
-            
-            steps{
-                
-                script{
-                    
-                    withSonarQubeEnv('sonarserver') {
-                        
+            withSonarQubeEnv('sonarserver'){
                         sh 'mvn clean package sonar:sonar'
                     }
-                }
-                    
-            }
+        
         }
     }
 }
+        
+    
+
     
